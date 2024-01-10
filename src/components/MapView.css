@@ -1,14 +1,14 @@
 * {
-    margin: 0;
+  margin: 0;
 }
 
-#root{
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 1fr;
+#root {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 2em;
 }
 
 .map {
-    background-color: lightblue;
+  background-color: lightblue;
 }
-

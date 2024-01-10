@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint kws-2100-gis-course --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "ol": "^8.2.0",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
