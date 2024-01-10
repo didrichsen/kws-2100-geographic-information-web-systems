@@ -3,7 +3,7 @@ Repository accompanying me throughout the GIS (Geographical Information Web Syst
 It serves as a log of exercises and lectures, each on their respective branch.
 Navigate through the branches to find specific content related to each exercise or lecture.
 
-## Tech Stack
+## Technologies
 - OpenLayers
 - PostGIS
 - React with TypeScript
