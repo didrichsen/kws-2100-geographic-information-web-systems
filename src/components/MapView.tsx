@@ -87,6 +87,33 @@ const MapView = () => {
     });
   };
 
+  const handleZoomInOnMyLocation = (e: React.MouseEvent) => {
+
+    e.preventDefault();
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      map.getView().animate({
+        center: [position.coords.longitude, position.coords.latitude],
+        zoom: 15,
+        duration: 2000,
+        easing: bounce,
+      });
+    });
+
+  }
+
+  const handleZoomToNorway = (e: React.MouseEvent) => {
+
+    e.preventDefault();
+
+    map.getView().animate({
+      center: [15, 65],
+      zoom: 4,
+    });
+
+  }
+
   const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
@@ -95,9 +122,11 @@ const MapView = () => {
 
   return (
     <>
-      <a href="#" onClick={handleResetView}>
-        Click to reset
-      </a>
+      <div className="btn-container">
+            <button onClick={handleResetView}>Reset view</button>
+            <button onClick={handleZoomInOnMyLocation}>Zoom in on my location</button>
+            <button onClick={handleZoomToNorway}>Zoom to Norway</button>
+      </div>
       <div className={"map"} ref={mapRef}></div>
     </>
   );

@@ -6,9 +6,21 @@
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 2em;
 }
 
 .map {
   background-color: lightblue;
+}
+
+.btn-container{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+
+}
+
+button{
+  cursor: pointer;
 }
