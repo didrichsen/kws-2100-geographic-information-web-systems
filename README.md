@@ -12,3 +12,4 @@ that lets users click on information on a map.
 - [x] Create index.html
 - [x] Create a GitHub Action Workflow that calls npm run build
 - [x] Update your GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
+- 
