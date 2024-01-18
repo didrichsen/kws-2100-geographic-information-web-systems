@@ -1,5 +1,5 @@
 # KWS2100: Exercise 2
----
+
 Build a vite project from scratch, set up GitHub Actions workflow and then deploy a React application 
 that lets users click on information on a map.
 
