@@ -1,10 +1,14 @@
-# KWS2100 Geographic Information Web Systems
-Repository accompanying me throughout the GIS (Geographical Information Web Systems) course.
-It serves as a log of exercises and lectures, each on their respective branch.
-Navigate through the branches to find specific content related to each exercise or lecture.
+# KWS2100 Geographic Information Web Systems: Exercise 2
+---
+Build a vite project from scratch, set up GitHub Actions workflow and then deploy a React application 
+that lets users click on information on a map.
 
-## Technologies
-- OpenLayers
-- PostGIS
-- React with TypeScript
-- Express
+## 1. Set up a vite project and enable GitHub Actions workflow
+-[X] Create a new GitHub repository (creating new branch instead)
+-[X] Clone the project locally
+-[X] Create an empty npm project -> echo {} > package.json
+-[X] Add Vite and TypeScript as dependencies 
+-[X] Create a dev and build script that calls vite and vite build, respectively -> npm pkg scripts.dev/build="vite/vite build"
+-[X] Create index.html
+-[X] Create a GitHub Action Workflow that calls npm run build
+- [] Update yout GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
