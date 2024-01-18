@@ -11,4 +11,4 @@ that lets users click on information on a map.
 -[X] Create a dev and build script that calls vite and vite build, respectively -> npm pkg scripts.dev/build="vite/vite build"
 -[X] Create index.html
 -[X] Create a GitHub Action Workflow that calls npm run build
-- [] Update yout GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
+-[X] Update your GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
