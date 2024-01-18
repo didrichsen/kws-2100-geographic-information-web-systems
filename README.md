@@ -1,4 +1,4 @@
-# KWS2100 Geographic Information Web Systems: Exercise 1
+# KWS2100: Exercise 1
 
 Create a React application that displays information on a map
 
