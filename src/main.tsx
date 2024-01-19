@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
+import React, {MutableRefObject, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import {Map, View} from "ol";
 import './main.css';
@@ -9,6 +9,8 @@ import 'ol/ol.css';
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import {GeoJSON} from "ol/format";
+import {FeatureClass} from "ol/Feature";
+import {Layer} from "ol/layer";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -17,25 +19,31 @@ useGeographic();
 
 const MapView = () => {
 
+    const [layer, setLayer] = useState<Layer[]>([
+        new TileLayer({
+            source: new OSM()
+        }),
+    ]);
+
     const [isChecked, setIsChecked] = useState(true)
 
-    const map = new Map({
-        layers: [
-            new TileLayer({
-                source: new OSM()
-            }),
-            new VectorLayer({
-                source: new VectorSource({
-                    url:"/kws-2100-geographic-information-web-systems/kommuner_komprimert.json",
-                    format: new GeoJSON()
+    const kommuneLayer = useMemo( () => new VectorLayer({
+        source: new VectorSource({
+            url:"/kws-2100-geographic-information-web-systems/kommuner_komprimert.json",
+            format: new GeoJSON()
+        }),
+    }), []);
+
+    const map = useMemo(
+        () =>
+            new Map({
+                view: new View({
+                    center: [10, 59],
+                    zoom: 8,
                 }),
-            })
-        ],
-        view: new View({
-            center: [10, 59],
-            zoom: 8
-        })
-    });
+            }),
+        []
+    );
 
     const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -43,22 +51,33 @@ const MapView = () => {
         map.setTarget(mapRef.current);
     }, []);
 
-    console.log(isChecked);
+    useEffect(() => {
+        if (isChecked) {
+            setLayer((oldLayer) => [...oldLayer, kommuneLayer]);
+        } else {
+            setLayer((oldLayer) => oldLayer.filter((layer) => layer !== kommuneLayer));
+        }
+    }, [isChecked]);
+
+
+    useEffect(() => {
+        map.setLayers(layer);
+    }, [layer]);
 
 
     return (
         <>
-            <header>Click button to click "kommuner" on and off.</header>
+            <header>An awesome application where you can learn about kommune Norge.</header>
             <nav>
                 <label>
-                    Toggle kommuner on/off (Not working yet)
-                <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)}></input>
+                    Toggle kommuner on/off
+                <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}></input>
                 </label>
                 </nav>
             <main>
                 <div className="map-container" ref={mapRef}></div>
             </main>
-            <footer>Created to show my love for kommuner, Simen!</footer>
+            <footer>Created by Simen with love for kommuner.</footer>
         </>
     )
 }

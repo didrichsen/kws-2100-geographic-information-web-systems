@@ -12,4 +12,12 @@ that lets users click on information on a map.
 - [x] Create index.html
 - [x] Create a GitHub Action Workflow that calls npm run build
 - [x] Update your GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
-- 
+  - https://didrichsen.github.io/kws-2100-geographic-information-web-systems/
+
+## 2. Display an interactive map where kommuner can toggles on/off
+- [x] Add react, react-dom and @types definitions
+- [x] Create a map using ol and OSM 
+- [x] Add [kommuner in Norway](https://www.eriksmistad.no/norges-fylker-og-kommuner-i-geojson-format/) as a vector layer.
+- [x] Commit and make sure the GitHub Actions workflow runs successfully and the page is deployed to GitHub pages.
+- [] Add a click handler on the map that displays the name of the clicked kommuner in a dialog box.
+- [x] Add toggle functionality to the kommuner layer to toggle it on/off.
