@@ -12,6 +12,7 @@ import {GeoJSON} from "ol/format";
 import {Layer} from "ol/layer";
 import {Fill, Icon, Stroke, Style} from "ol/style";
 import {Point} from "ol/geom";
+import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -107,6 +108,7 @@ const MapView = () => {
     }
 
     const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
+    const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
     useEffect(() => {
         map.setTarget(mapRef.current);
@@ -137,10 +139,7 @@ const MapView = () => {
         <>
             <header>An awesome application where you can learn about kommune Norge.</header>
             <nav>
-                <label>
-                    Toggle kommuner on/off
-                <input type="checkbox" checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}></input>
-                </label>
+                <KommuneLayerCheckbox isChecked={isChecked} setIsChecked={setIsChecked} />
                 {kommune? <p>Currently selected kommune: {kommune}</p> : <p>Click on a kommune to see its name</p>}
                 </nav>
             <main>
