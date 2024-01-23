@@ -13,8 +13,8 @@ interface KommuneLayerCheckboxProps {
 
 const KommuneLayerCheckbox = ({map, setLayer} : KommuneLayerCheckboxProps) => {
 
-    const [kommune, setKommune] = useState<string>("");
-    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [kommune, setKommune] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
 
     const kommuneLayer = useMemo( () => new VectorLayer({
         source: new VectorSource({
