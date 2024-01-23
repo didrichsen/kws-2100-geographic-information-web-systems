@@ -21,8 +21,6 @@ useGeographic();
 
 const MapView = () => {
 
-    const [kommune, setKommune] = useState<string>("");
-
     const [layer, setLayer] = useState<Layer[]>([
         new TileLayer({
             source: new OSM()
@@ -62,7 +60,7 @@ const MapView = () => {
         image: new Icon({
           anchor: [0.5, 46],
           anchorXUnits: 'fraction',
-          anchorYUnits: 'pixels',
+          anchorYUnits: 'fraction',
           src: '../public/marker.png',
         }),
       });
@@ -78,15 +76,6 @@ const MapView = () => {
       });
 
 
-    const [isChecked, setIsChecked] = useState(true)
-
-    const kommuneLayer = useMemo( () => new VectorLayer({
-        source: new VectorSource({
-            url:"/kws-2100-geographic-information-web-systems/kommuner_komprimert.json",
-            format: new GeoJSON()
-        }),
-    }), []);
-
     const map = useMemo(
         () =>
             new Map({
@@ -98,15 +87,6 @@ const MapView = () => {
         []
     );
 
-    const handleClick =  (e: MapBrowserEvent<MouseEvent>) => {
-        const features = map.getFeaturesAtPixel(e.pixel);
-        if (features) {
-            const feature = features[0];
-            const kommune = feature.get('navn');
-            setKommune(kommune[0].navn);
-        }
-    }
-
     const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
     const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
@@ -115,32 +95,16 @@ const MapView = () => {
     }, []);
 
     useEffect(() => {
-        if (isChecked) {
-            setLayer((oldLayer) => [...oldLayer, kommuneLayer]);
-        } else {
-            setLayer((oldLayer) => oldLayer.filter((layer) => layer !== kommuneLayer));
-        }
-    }, [isChecked]);
-
-
-    useEffect(() => {
         //const layers = map.getLayers();
         //layers.push(vectorLayer);
         map.setLayers(layer);
     }, [layer]);
 
-    useEffect(() => {
-        map.on('singleclick', handleClick);
-    }, []);
-
-
-
     return (
         <>
             <header>An awesome application where you can learn about kommune Norge.</header>
             <nav>
-                <KommuneLayerCheckbox isChecked={isChecked} setIsChecked={setIsChecked} />
-                {kommune? <p>Currently selected kommune: {kommune}</p> : <p>Click on a kommune to see its name</p>}
+                <KommuneLayerCheckbox map={map} setLayer={setLayer}/>
                 </nav>
             <main>
                 <div className="map-container" ref={mapRef}></div>
