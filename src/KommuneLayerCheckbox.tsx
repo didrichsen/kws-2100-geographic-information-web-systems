@@ -2,19 +2,29 @@ import React, {Dispatch, MutableRefObject, SetStateAction, useEffect, useMemo, u
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import {GeoJSON} from "ol/format";
-import {MapBrowserEvent} from "ol";
+import {Feature, MapBrowserEvent} from "ol";
 import {Map} from "ol";
 import {Layer} from "ol/layer";
+import FeaturesInView from "./FeaturesInView";
 
 interface KommuneLayerCheckboxProps {
     map: Map,
     setLayer: Dispatch<SetStateAction<Layer[]>>
 }
 
+interface KommuneProperties {
+    navn: string
+}
+
+type KommuneFeature = Feature & {
+    getProperties(): KommuneProperties
+};
+
 const KommuneLayerCheckbox = ({map, setLayer} : KommuneLayerCheckboxProps) => {
 
     const [kommune, setKommune] = useState("");
     const [isChecked, setIsChecked] = useState(false);
+    const [clickedKommune, setClickedKommune] = useState<KommuneFeature | undefined>(undefined);
 
     const kommuneLayer = useMemo( () => new VectorLayer({
         source: new VectorSource({
@@ -51,17 +61,30 @@ const KommuneLayerCheckbox = ({map, setLayer} : KommuneLayerCheckboxProps) => {
 
      */}
 
+    const handleClickFeatureApproach = (e : MapBrowserEvent<MouseEvent>) => {
+
+        const clickedKommuner = kommuneLayer.getSource()?.getFeaturesAtCoordinate(e.coordinate);
+
+        setClickedKommune(clickedKommuner?.[0] as KommuneFeature);
+
+    }
+
     useEffect(() => {
         if (isChecked) {
             setLayer((oldLayer) => [...oldLayer, kommuneLayer]);
+            map.on('singleclick', handleClick);
+            map.on('singleclick', handleClickFeatureApproach);
         } else {
             setLayer((oldLayer) => oldLayer.filter((layer) => layer !== kommuneLayer));
+            map.un('singleclick', handleClick);
+            map.un('singleclick', handleClickFeatureApproach);
         }
     }, [isChecked]);
 
     useEffect(() => {
-        map.on('singleclick', handleClick);
-    }, []);
+        console.log(clickedKommune);
+    }, [clickedKommune]);
+
 
     useEffect(() => {
         if (kommune) {
@@ -83,6 +106,7 @@ const KommuneLayerCheckbox = ({map, setLayer} : KommuneLayerCheckboxProps) => {
                 </form>
             </dialog>
         {kommune? <p>Currently selected kommune: {kommune}</p> : <p>Click on a kommune to see its name</p>}
+            <FeaturesInView map={map}/>
         </>
     );
 
