@@ -1,25 +1,13 @@
-# KWS2100: Exercise 2
+# KWS2100: Exercise 3
 
-Build a vite project from scratch, set up GitHub Actions workflow and then deploy a React application
-that lets users click on information on a map.
+Continue from exercise two. Switch out dialog box with an aside that displays the name of the kommuner
+which are in the current view.
 
-## 1. Set up a vite project and enable GitHub Actions workflow
+## 1. Create an aside by following the steps below
 
-- [x] Create a new GitHub repository (creating new branch instead)
-- [x] Clone the project locally
-- [x] Create an empty npm project -> echo {} > package.json
-- [x] Add Vite and TypeScript as dependencies
-- [x] Create a dev and build script that calls vite and vite build, respectively -> npm pkg scripts.dev/build="vite/vite build"
-- [x] Create index.html
-- [x] Create a GitHub Action Workflow that calls npm run build
-- [x] Update your GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
-  - https://didrichsen.github.io/kws-2100-geographic-information-web-systems/
+- [] When the user clicks on the map with kommuner on, an overlay should show the name of the clicked feature.
+- [] The system should show a list of features in an aside.
+- [] When the user changes the view, the list of features in the aside should reflect what the user sees.
+- [] When the user hovers on a feature in the map, the feature should be highlighted in the aside.
+- [] When the user hovers on a feature in the aside, the feature should be highlighted in the map.
 
-## 2. Display an interactive map where kommuner can toggles on/off
-
-- [x] Add react, react-dom and @types definitions
-- [x] Create a map using ol and OSM
-- [x] Add [kommuner in Norway](https://www.eriksmistad.no/norges-fylker-og-kommuner-i-geojson-format/) as a vector layer.
-- [x] Commit and make sure the GitHub Actions workflow runs successfully and the page is deployed to GitHub pages.
-- [] Add a click handler on the map that displays the name of the clicked kommuner in a dialog box.
-- [x] Add toggle functionality to the kommuner layer to toggle it on/off.
