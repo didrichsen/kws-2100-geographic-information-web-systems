@@ -28,11 +28,9 @@ type KommuneFeature = Feature & {
 };
 
 const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
-  const [kommune, setKommune] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
 
-  //Another approach to get the clicked feature
-  //const [clickedKommune, setClickedKommune] = useState<KommuneFeature | undefined>(undefined);
+  const [isChecked, setIsChecked] = useState(false);
+  const [clickedKommune, setClickedKommune] = useState<KommuneFeature | undefined>(undefined);
 
   const kommuneLayer = useMemo(
     () =>
@@ -45,34 +43,37 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
     [],
   );
 
-  const handleClick = (e: MapBrowserEvent<MouseEvent>) => {
-    const features = map.getFeaturesAtPixel(e.pixel);
-    if (features) {
-      const feature = features[0];
-      const kommuneNavnArray = feature.get("navn");
-      console.log(kommuneNavnArray);
-      setKommune(kommuneNavnArray[0].navn);
+  const handleFeatureClick = (e: MapBrowserEvent<MouseEvent>) => {
+
+    e.preventDefault();
+
+    const kommuneFeatures = kommuneLayer.getSource()?.getFeaturesAtCoordinate(e.coordinate);
+
+    if (kommuneFeatures) {
+      const kommuneFeature = kommuneFeatures[0] as KommuneFeature;
+      setClickedKommune(kommuneFeature);
     }
-  };
+
+  }
 
   const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
   useEffect(() => {
     if (isChecked) {
       setLayer((old) => [...old, kommuneLayer]);
-      map.on("singleclick", handleClick);
+      map.on("singleclick", handleFeatureClick);
     }
     return () => {
-      map.un("singleclick", handleClick);
+      map.un("singleclick", handleFeatureClick);
       setLayer((old) => old.filter((l) => l !== kommuneLayer));
     };
   }, [isChecked]);
 
   useEffect(() => {
-    if (kommune) {
+    if (clickedKommune) {
       dialogRef.current.showModal();
     }
-  }, [kommune]);
+  }, [clickedKommune]);
 
   return (
     <>
@@ -86,7 +87,7 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
       </label>
       <dialog ref={dialogRef}>
         <h2>Kommune</h2>
-        <p>{kommune}</p>
+        <p>{clickedKommune?.getProperties().navn[0].navn}</p>
         <form method="dialog">
           <button>Close</button>
         </form>
