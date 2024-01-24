@@ -13,7 +13,6 @@ import { GeoJSON } from "ol/format";
 import { Feature, MapBrowserEvent } from "ol";
 import { Map } from "ol";
 import { Layer } from "ol/layer";
-import FeaturesInView from "./FeaturesInView";
 
 interface KommuneLayerCheckboxProps {
   map: Map;
@@ -32,6 +31,7 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
   const [kommune, setKommune] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  //Another approach to get the clicked feature
   //const [clickedKommune, setClickedKommune] = useState<KommuneFeature | undefined>(undefined);
 
   const kommuneLayer = useMemo(
@@ -49,8 +49,9 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
     const features = map.getFeaturesAtPixel(e.pixel);
     if (features) {
       const feature = features[0];
-      const kommune = feature.get("navn");
-      setKommune(kommune[0].navn);
+      const kommuneNavnArray = feature.get("navn");
+      console.log(kommuneNavnArray);
+      setKommune(kommuneNavnArray[0].navn);
     }
   };
 
@@ -76,7 +77,7 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
   return (
     <>
       <label>
-        Toggle kommuner on/off
+        {isChecked ? "Remove layer" : "Add layer"}
         <input
           type="checkbox"
           checked={isChecked}
@@ -84,18 +85,12 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
         ></input>
       </label>
       <dialog ref={dialogRef}>
-        <h2>Valgt kommune</h2>
+        <h2>Kommune</h2>
         <p>{kommune}</p>
         <form method="dialog">
           <button>Close</button>
         </form>
       </dialog>
-      {kommune ? (
-        <p>Currently selected kommune: {kommune}</p>
-      ) : (
-        <p>Click on a kommune to see its name</p>
-      )}
-      <FeaturesInView map={map} />
     </>
   );
 };
