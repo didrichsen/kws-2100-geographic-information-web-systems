@@ -13,6 +13,7 @@ import { GeoJSON } from "ol/format";
 import { Feature, MapBrowserEvent, Overlay } from "ol";
 import { Map } from "ol";
 import { Layer } from "ol/layer";
+import {KommuneContext} from "./context/kommuneContext";
 
 interface KommuneLayerCheckboxProps {
   map: Map;
@@ -28,7 +29,7 @@ type KommuneFeature = Feature & {
 };
 
 const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const {checked, setChecked} = React.useContext(KommuneContext);
   const [clickedKommune, setClickedKommune] = useState<
     KommuneFeature | undefined
   >(undefined);
@@ -76,7 +77,7 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
   const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
   useEffect(() => {
-    if (isChecked) {
+    if (checked) {
       setLayer((old) => [...old, kommuneLayer]);
       map.on("singleclick", handleFeatureClick);
     }
@@ -86,16 +87,20 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
       overlay.setPosition(undefined);
       setLayer((old) => old.filter((l) => l !== kommuneLayer));
     };
-  }, [isChecked]);
+  }, [checked]);
+
+  useEffect(() => {
+    console.log(checked);
+  }, []);
 
   return (
     <>
       <label>
-        {isChecked ? "Remove layer" : "Add layer"}
+        {checked ? "Remove layer" : "Add layer"}
         <input
           type="checkbox"
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
+          checked={checked}
+          onChange={(e) => setChecked(e.target.checked)}
         ></input>
       </label>
       <div ref={overlayRef}>

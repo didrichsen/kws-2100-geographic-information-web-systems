@@ -21,6 +21,8 @@ import { Point } from "ol/geom";
 import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 import FocusOnMe from "./FocusOnMe";
 import MarkerOslo from "./MarkerOslo";
+import KommuneAside from "./KommuneAside";
+import {KommuneContext} from "./context/kommuneContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -35,27 +37,7 @@ const MapView = () => {
     }),
   ]);
 
-  /*
-    const marker = useMemo(() => {
-        const image = new Image(20,20);
-        image.src = '../public/marker.png';
-
-        return new VectorLayer({
-            source: new VectorSource({
-                features: [
-                    new Feature({
-                        geometry: new Point([59,10]),
-                    }),
-                ],
-            }),
-            style: new Style({
-                image: new Icon({
-                    img: image,
-                }),
-            }),
-        });
-    }, []);
-*/
+  const [checked, setChecked] = useState(false);
 
   const iconFeature = new Feature({
     geometry: new Point([59, 10]),
@@ -109,14 +91,18 @@ const MapView = () => {
       <header>
         An awesome application where you can learn about kommune Norge.
       </header>
+      <KommuneContext.Provider value={{checked, setChecked}}>
       <nav>
         <FocusOnMe map={map} />
         <KommuneLayerCheckbox map={map} setLayer={setLayer} />
       </nav>
+
       <main>
         <div className="map-container" ref={mapRef}></div>
         <MarkerOslo map={map} />
+        <KommuneAside/>
       </main>
+        </KommuneContext.Provider>
       <footer>Created by Simen with love for kommuner.</footer>
     </>
   );

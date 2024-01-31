@@ -25,16 +25,13 @@ nav {
   width: 100%;
 }
 
-dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 1em;
-}
-
 footer {
   text-align: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 #marker {
@@ -44,4 +41,21 @@ footer {
   border-radius: 10px;
   background-color: #0FF;
   opacity: 0.5;
+}
+
+main aside {
+  display: grid;
+  grid-template-columns: 0;
+  transition: grid-template-columns 0.5s ease-out;
+  overflow-x: clip;
+  overflow-y: auto;
+  max-height: calc(100dvh - 100px);
+}
+
+main aside.visible {
+  grid-template-columns: 1fr;
+}
+
+main aside > * {
+  padding: 0.25rem;
 }

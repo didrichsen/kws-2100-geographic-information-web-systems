@@ -11,4 +11,4 @@ which are in the current view.
 
 ## Additional tasks 
 
-- [] The map should show an overlay with mark of a chosen city. 
+- [x] The map should show an overlay with mark of a chosen city. 
