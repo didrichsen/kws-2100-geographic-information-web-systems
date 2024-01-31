@@ -13,7 +13,6 @@ import { GeoJSON } from "ol/format";
 import { Feature, MapBrowserEvent, Overlay } from "ol";
 import { Map } from "ol";
 import { Layer } from "ol/layer";
-import {KommuneContext} from "./context/kommuneContext";
 
 interface KommuneLayerCheckboxProps {
   map: Map;
@@ -29,7 +28,7 @@ type KommuneFeature = Feature & {
 };
 
 const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
-  const {checked, setChecked} = React.useContext(KommuneContext);
+  const [checked, setChecked] = useState(false);
   const [clickedKommune, setClickedKommune] = useState<
     KommuneFeature | undefined
   >(undefined);

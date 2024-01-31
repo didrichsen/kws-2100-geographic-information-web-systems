@@ -22,7 +22,6 @@ import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 import FocusOnMe from "./FocusOnMe";
 import MarkerOslo from "./MarkerOslo";
 import KommuneAside from "./KommuneAside";
-import {KommuneContext} from "./context/kommuneContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -91,7 +90,6 @@ const MapView = () => {
       <header>
         An awesome application where you can learn about kommune Norge.
       </header>
-      <KommuneContext.Provider value={{checked, setChecked}}>
       <nav>
         <FocusOnMe map={map} />
         <KommuneLayerCheckbox map={map} setLayer={setLayer} />
@@ -102,7 +100,6 @@ const MapView = () => {
         <MarkerOslo map={map} />
         <KommuneAside/>
       </main>
-        </KommuneContext.Provider>
       <footer>Created by Simen with love for kommuner.</footer>
     </>
   );
