@@ -48,6 +48,7 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
   const kommuneLayer = useMemo(
     () =>
       new VectorLayer({
+        className: "kommune",
         source: new VectorSource({
           url: "/kws-2100-geographic-information-web-systems/kommuner_komprimert.json",
           format: new GeoJSON(),

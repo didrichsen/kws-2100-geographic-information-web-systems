@@ -46,7 +46,7 @@ main {
 main aside {
   display: grid;
   grid-template-columns: 0;
-  transition: grid-template-columns 0.5s ease-out;
+  /*transition: grid-template-columns 0.2s ease-out;*/
   overflow-x: clip;
   overflow-y: auto;
   max-height: calc(100dvh - 100px);

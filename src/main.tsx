@@ -6,22 +6,18 @@ import React, {
   useState,
 } from "react";
 import ReactDOM from "react-dom/client";
-import { Feature, Map, MapBrowserEvent, View } from "ol";
+import { Map, View } from "ol";
 import "./main.css";
 import { OSM } from "ol/source";
 import TileLayer from "ol/layer/Tile";
 import { useGeographic } from "ol/proj";
 import "ol/ol.css";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import { GeoJSON } from "ol/format";
 import { Layer } from "ol/layer";
-import { Fill, Icon, Stroke, Style } from "ol/style";
-import { Point } from "ol/geom";
 import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 import FocusOnMe from "./FocusOnMe";
 import MarkerOslo from "./MarkerOslo";
 import KommuneAside from "./KommuneAside";
+import {KommuneContext} from "./context/KommuneContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -35,32 +31,6 @@ const MapView = () => {
       source: new OSM(),
     }),
   ]);
-
-  const [checked, setChecked] = useState(false);
-
-  const iconFeature = new Feature({
-    geometry: new Point([59, 10]),
-    name: "Test",
-  });
-
-  const iconStyle = new Style({
-    image: new Icon({
-      anchor: [0.5, 46],
-      anchorXUnits: "fraction",
-      anchorYUnits: "fraction",
-      src: "../public/marker.png",
-    }),
-  });
-
-  iconFeature.setStyle(iconStyle);
-
-  const vectorSource = new VectorSource({
-    features: [iconFeature],
-  });
-
-  const vectorLayer = new VectorLayer({
-    source: vectorSource,
-  });
 
   const map = useMemo(
     () =>
@@ -80,13 +50,12 @@ const MapView = () => {
   }, []);
 
   useEffect(() => {
-    //const layers = map.getLayers();
-    //layers.push(vectorLayer);
     map.setLayers(layer);
   }, [layer]);
 
   return (
     <>
+      <KommuneContext.Provider value={{layer}}>
       <header>
         An awesome application where you can learn about kommune Norge.
       </header>
@@ -101,6 +70,7 @@ const MapView = () => {
         <KommuneAside/>
       </main>
       <footer>Created by Simen with love for kommuner.</footer>
+        </KommuneContext.Provider>
     </>
   );
 };
