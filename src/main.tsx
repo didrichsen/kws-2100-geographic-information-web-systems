@@ -20,6 +20,7 @@ import { Fill, Icon, Stroke, Style } from "ol/style";
 import { Point } from "ol/geom";
 import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 import FocusOnMe from "./FocusOnMe";
+import MarkerOslo from "./MarkerOslo";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -92,7 +93,6 @@ const MapView = () => {
   );
 
   const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
-  const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
   useEffect(() => {
     map.setTarget(mapRef.current);
@@ -115,6 +115,7 @@ const MapView = () => {
       </nav>
       <main>
         <div className="map-container" ref={mapRef}></div>
+        <MarkerOslo map={map} />
       </main>
       <footer>Created by Simen with love for kommuner.</footer>
     </>

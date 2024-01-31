@@ -8,7 +8,7 @@ which are in the current view.
 - [x] The user should be able to focus on their own position
 - [x] The user should be able to toggle display of kommune layer on and off
 - [x] When the user clicks on the map with kommuner on, an overlay should show the name of the clicked feature.
-- [] The system should show a list of features in an aside.
-- [] When the user changes the view, the list of features in the aside should reflect what the user sees.
-- [] When the user hovers on a feature in the map, the feature should be highlighted in the aside.
-- [] When the user hovers on a feature in the aside, the feature should be highlighted in the map.
+
+## Additional tasks 
+
+- [] The map should show an overlay with mark of a chosen city. 
