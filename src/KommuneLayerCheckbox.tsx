@@ -10,7 +10,7 @@ import React, {
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
-import { Feature, MapBrowserEvent } from "ol";
+import { Feature, MapBrowserEvent, Overlay } from "ol";
 import { Map } from "ol";
 import { Layer } from "ol/layer";
 
@@ -28,9 +28,22 @@ type KommuneFeature = Feature & {
 };
 
 const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
-
   const [isChecked, setIsChecked] = useState(false);
-  const [clickedKommune, setClickedKommune] = useState<KommuneFeature | undefined>(undefined);
+  const [clickedKommune, setClickedKommune] = useState<
+    KommuneFeature | undefined
+  >(undefined);
+
+  const overlay = useMemo(() => new Overlay({}), []);
+  const overlayRef = useRef() as MutableRefObject<HTMLDivElement>;
+
+  useEffect(() => {
+    overlay.setElement(overlayRef.current);
+    map.addOverlay(overlay);
+
+    return () => {
+      map.removeOverlay(overlay);
+    };
+  }, []);
 
   const kommuneLayer = useMemo(
     () =>
@@ -44,17 +57,21 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
   );
 
   const handleFeatureClick = (e: MapBrowserEvent<MouseEvent>) => {
-
     e.preventDefault();
 
-    const kommuneFeatures = kommuneLayer.getSource()?.getFeaturesAtCoordinate(e.coordinate);
+    const kommuneFeatures = kommuneLayer
+      .getSource()
+      ?.getFeaturesAtCoordinate(e.coordinate);
 
     if (kommuneFeatures) {
       const kommuneFeature = kommuneFeatures[0] as KommuneFeature;
       setClickedKommune(kommuneFeature);
+      overlay.setPosition(e.coordinate);
+    } else {
+      setClickedKommune(undefined);
+      overlay.setPosition(undefined);
     }
-
-  }
+  };
 
   const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
 
@@ -65,15 +82,11 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
     }
     return () => {
       map.un("singleclick", handleFeatureClick);
+      setClickedKommune(undefined);
+      overlay.setPosition(undefined);
       setLayer((old) => old.filter((l) => l !== kommuneLayer));
     };
   }, [isChecked]);
-
-  useEffect(() => {
-    if (clickedKommune) {
-      dialogRef.current.showModal();
-    }
-  }, [clickedKommune]);
 
   return (
     <>
@@ -85,13 +98,9 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
           onChange={(e) => setIsChecked(e.target.checked)}
         ></input>
       </label>
-      <dialog ref={dialogRef}>
-        <h2>Kommune</h2>
+      <div ref={overlayRef}>
         <p>{clickedKommune?.getProperties().navn[0].navn}</p>
-        <form method="dialog">
-          <button>Close</button>
-        </form>
-      </dialog>
+      </div>
     </>
   );
 };

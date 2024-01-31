@@ -19,6 +19,7 @@ import { Layer } from "ol/layer";
 import { Fill, Icon, Stroke, Style } from "ol/style";
 import { Point } from "ol/geom";
 import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
+import FocusOnMe from "./FocusOnMe";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -109,6 +110,7 @@ const MapView = () => {
         An awesome application where you can learn about kommune Norge.
       </header>
       <nav>
+        <FocusOnMe map={map} />
         <KommuneLayerCheckbox map={map} setLayer={setLayer} />
       </nav>
       <main>

@@ -10,4 +10,3 @@ which are in the current view.
 - [] When the user changes the view, the list of features in the aside should reflect what the user sees.
 - [] When the user hovers on a feature in the map, the feature should be highlighted in the aside.
 - [] When the user hovers on a feature in the aside, the feature should be highlighted in the map.
-
