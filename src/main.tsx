@@ -1,5 +1,6 @@
 import React, {
   MutableRefObject,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -17,33 +18,19 @@ import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
 import FocusOnMe from "./FocusOnMe";
 import MarkerOslo from "./MarkerOslo";
 import KommuneAside from "./KommuneAside";
-import {KommuneContext} from "./context/KommuneContext";
+import { KommuneContext } from "./context/KommuneContext";
+import { map } from "./context/KommuneContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 
-useGeographic();
-
 const MapView = () => {
-
-
   const [layer, setLayer] = useState<Layer[]>([
     new TileLayer({
       source: new OSM(),
     }),
   ]);
-
-  const map = useMemo(
-    () =>
-      new Map({
-        view: new View({
-          center: [10, 59],
-          zoom: 8,
-        }),
-      }),
-    [],
-  );
 
   const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -57,22 +44,22 @@ const MapView = () => {
 
   return (
     <>
-      <KommuneContext.Provider value={{layer}}>
-      <header>
-        An awesome application where you can learn about kommune Norge.
-      </header>
-      <nav>
-        <FocusOnMe map={map} />
-        <KommuneLayerCheckbox map={map} setLayer={setLayer} />
-      </nav>
+      <KommuneContext.Provider value={{ map, layer }}>
+        <header>
+          An awesome application where you can learn about kommune Norge.
+        </header>
+        <nav>
+          <FocusOnMe map={map} />
+          <KommuneLayerCheckbox map={map} setLayer={setLayer} />
+        </nav>
 
-      <main>
-        <div className="map-container" ref={mapRef}></div>
-        <MarkerOslo map={map} />
-        <KommuneAside/>
-      </main>
-      <footer>Created by Simen with love for kommuner.</footer>
-        </KommuneContext.Provider>
+        <main>
+          <div className="map-container" ref={mapRef}></div>
+          <MarkerOslo map={map} />
+          <KommuneAside />
+        </main>
+        <footer>Created by Simen with love for kommuner.</footer>
+      </KommuneContext.Provider>
     </>
   );
 };

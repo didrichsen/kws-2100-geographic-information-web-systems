@@ -9,6 +9,6 @@ which are in the current view.
 - [x] The user should be able to toggle display of kommune layer on and off
 - [x] When the user clicks on the map with kommuner on, an overlay should show the name of the clicked feature.
 
-## Additional tasks 
+## Additional tasks
 
-- [x] The map should show an overlay with mark of a chosen city. 
+- [x] The map should show an overlay with mark of a chosen city.
