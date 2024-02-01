@@ -26,6 +26,8 @@ const root = ReactDOM.createRoot(
 useGeographic();
 
 const MapView = () => {
+
+
   const [layer, setLayer] = useState<Layer[]>([
     new TileLayer({
       source: new OSM(),
