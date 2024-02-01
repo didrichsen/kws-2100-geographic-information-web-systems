@@ -14,10 +14,10 @@ import TileLayer from "ol/layer/Tile";
 import { useGeographic } from "ol/proj";
 import "ol/ol.css";
 import { Layer } from "ol/layer";
-import KommuneLayerCheckbox from "./KommuneLayerCheckbox";
-import FocusOnMe from "./FocusOnMe";
-import MarkerOslo from "./MarkerOslo";
-import KommuneAside from "./KommuneAside";
+import KommuneLayerCheckbox from "./kommune/KommuneLayerCheckbox";
+import FocusOnMe from "./features/FocusOnMe";
+import MarkerOslo from "./features/MarkerOslo";
+import KommuneAside from "./kommune/KommuneAside";
 import { KommuneContext } from "./context/KommuneContext";
 import { map } from "./context/KommuneContext";
 
