@@ -1,9 +1,9 @@
 import React from "react";
-import {KommuneFeatures} from "./KommuneFeatures";
-import {getStedsNavn} from "../utility/utilities";
+import { KommuneFeatures } from "./KommuneFeatures";
+import { getStedsNavn } from "../utility/utilities";
 
 const KommuneAside = () => {
-  const {  visibleFeatures } = KommuneFeatures();
+  const { visibleFeatures } = KommuneFeatures();
 
   return (
     <aside className={visibleFeatures ? "visible" : "hidden"}>

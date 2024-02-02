@@ -16,7 +16,9 @@ export const map = new Map({
 export const KommuneContext = createContext<{
   map: Map;
   layer: Layer[];
+  setLayer: React.Dispatch<SetStateAction<Layer[]>>;
 }>({
+  setLayer: () => {},
   map,
   layer: [],
 });

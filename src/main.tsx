@@ -7,7 +7,6 @@ import React, {
   useState,
 } from "react";
 import ReactDOM from "react-dom/client";
-import { Map, View } from "ol";
 import "./main.css";
 import { OSM } from "ol/source";
 import TileLayer from "ol/layer/Tile";
@@ -20,6 +19,8 @@ import MarkerOslo from "./features/MarkerOslo";
 import KommuneAside from "./kommune/KommuneAside";
 import { KommuneContext } from "./context/KommuneContext";
 import { map } from "./context/KommuneContext";
+import FylkeAside from "./fylke/FylkeAside";
+import FylkeLayerCheckbox from "./fylke/FylkeLayerCheckbox";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -44,19 +45,21 @@ const MapView = () => {
 
   return (
     <>
-      <KommuneContext.Provider value={{ map, layer }}>
+      <KommuneContext.Provider value={{ map, layer, setLayer }}>
         <header>
           An awesome application where you can learn about kommune Norge.
         </header>
         <nav>
           <FocusOnMe map={map} />
           <KommuneLayerCheckbox map={map} setLayer={setLayer} />
+          <FylkeLayerCheckbox />
         </nav>
 
         <main>
           <div className="map-container" ref={mapRef}></div>
           <MarkerOslo map={map} />
           <KommuneAside />
+          <FylkeAside />
         </main>
         <footer>Created by Simen with love for kommuner.</footer>
       </KommuneContext.Provider>

@@ -1,7 +1,7 @@
-import {stedsNavn} from "./interfaces";
+import { stedsNavn } from "./interfaces";
 
 const getStedsNavn = (navn: stedsNavn[]) => {
-    return navn.find((navn) => navn.sprak === "nor")?.navn;
+  return navn.find((navn) => navn.sprak === "nor")?.navn;
 };
 
-export {getStedsNavn};
+export { getStedsNavn };

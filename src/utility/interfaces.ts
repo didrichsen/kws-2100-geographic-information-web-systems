@@ -1,6 +1,6 @@
 interface stedsNavn {
-    sprak: string;
-    navn: string;
+  sprak: string;
+  navn: string;
 }
 
-export {stedsNavn};
+export { stedsNavn };

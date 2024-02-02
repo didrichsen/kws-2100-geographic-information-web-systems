@@ -15,6 +15,4 @@ which are in the current view.
 
 - [] Add layers showing "fylker" in Norway
 - [] Add countries of the world
-- [] Add Norwegian Railroad stations 
-  
-  
+- [] Add Norwegian Railroad stations

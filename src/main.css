@@ -15,9 +15,14 @@ footer {
   padding: 1em;
 }
 
-header,
-nav {
+header {
   text-align: center;
+}
+
+nav {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
 }
 
 .map-container {
@@ -31,7 +36,7 @@ footer {
 
 main {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
 }
 
 #marker {
