@@ -17,8 +17,8 @@ import KommuneLayerCheckbox from "./kommune/KommuneLayerCheckbox";
 import FocusOnMe from "./features/FocusOnMe";
 import MarkerOslo from "./features/MarkerOslo";
 import KommuneAside from "./kommune/KommuneAside";
-import { KommuneContext } from "./context/KommuneContext";
-import { map } from "./context/KommuneContext";
+import { MapContext } from "./context/MapContext";
+import { map } from "./context/MapContext";
 import FylkeAside from "./fylke/FylkeAside";
 import FylkeLayerCheckbox from "./fylke/FylkeLayerCheckbox";
 
@@ -45,24 +45,24 @@ const MapView = () => {
 
   return (
     <>
-      <KommuneContext.Provider value={{ map, layer, setLayer }}>
+      <MapContext.Provider value={{ map, layer, setLayer }}>
         <header>
           An awesome application where you can learn about kommune Norge.
         </header>
         <nav>
           <FocusOnMe map={map} />
           <KommuneLayerCheckbox map={map} setLayer={setLayer} />
-          <FylkeLayerCheckbox />
+          {/*<FylkeLayerCheckbox />*/}
         </nav>
 
         <main>
           <div className="map-container" ref={mapRef}></div>
           <MarkerOslo map={map} />
           <KommuneAside />
-          <FylkeAside />
+          {/*<FylkeAside />*/}
         </main>
         <footer>Created by Simen with love for kommuner.</footer>
-      </KommuneContext.Provider>
+      </MapContext.Provider>
     </>
   );
 };

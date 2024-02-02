@@ -13,7 +13,7 @@ export const map = new Map({
   }),
 });
 
-export const KommuneContext = createContext<{
+export const MapContext = createContext<{
   map: Map;
   layer: Layer[];
   setLayer: React.Dispatch<SetStateAction<Layer[]>>;

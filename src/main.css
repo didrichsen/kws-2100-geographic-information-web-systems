@@ -18,12 +18,14 @@ footer {
 header {
   text-align: center;
 }
-
+/*
 nav {
   display: flex;
   gap: 1em;
   justify-content: center;
 }
+
+ */
 
 .map-container {
   height: 100%;

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useMemo} from "react";
 import {useState} from "react";
-import {KommuneContext} from "../context/KommuneContext";
+import {MapContext} from "../context/MapContext";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import {GeoJSON} from "ol/format";
@@ -9,7 +9,7 @@ const FylkeLayerCheckbox = () => {
 
     const [checked, setChecked] = useState(false);
 
-    const { setLayer} = useContext(KommuneContext);
+    const { setLayer} = useContext(MapContext);
 
     const fylkeLayer = useMemo(() => new VectorLayer({
         className: "fylker",

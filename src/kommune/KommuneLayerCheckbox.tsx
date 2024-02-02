@@ -89,10 +89,6 @@ const KommuneLayerCheckbox = ({ map, setLayer }: KommuneLayerCheckboxProps) => {
     };
   }, [checked]);
 
-  useEffect(() => {
-    console.log(checked);
-  }, []);
-
   return (
     <>
       <label>

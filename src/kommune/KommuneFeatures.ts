@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { KommuneContext } from "../context/KommuneContext";
+import { MapContext } from "../context/MapContext";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Feature } from "ol";
@@ -16,9 +16,7 @@ interface kommuneFeatures extends Feature {
 }
 
 export const KommuneFeatures = () => {
-  const { layer, map } = React.useContext(KommuneContext);
-
-  const [viewExtend, setViewExtend] = useState(map.getView().calculateExtent());
+  const { layer, map } = React.useContext(MapContext);
 
   const kommuneLayer = layer.find(
     (layer) => layer.getClassName() === "kommune",
@@ -26,23 +24,29 @@ export const KommuneFeatures = () => {
 
   const [features, setFeatures] = useState<kommuneFeatures[]>();
 
+  const [viewExtend, setViewExtend] = useState(map.getView().getViewStateAndExtent().extent);
+
+
   const visibleFeatures = useMemo(
     () =>
       features?.filter((feature) =>
         feature.getGeometry()?.intersectsExtent(viewExtend),
-      ),
+          ),
     [features, viewExtend],
   );
 
   function handleSourceChange() {
+    console.log("handlesoureChange")
     setFeatures(kommuneLayer?.getSource()?.getFeatures());
   }
 
   function handleViewUpdate() {
-    setViewExtend(map.getView().calculateExtent());
+    setViewExtend(map.getView().getViewStateAndExtent().extent);
   }
 
+
   useEffect(() => {
+    console.log("useEffect HandleSourceChange")
     kommuneLayer?.getSource()?.on("change", handleSourceChange);
 
     return () => kommuneLayer?.getSource()?.un("change", handleSourceChange);
