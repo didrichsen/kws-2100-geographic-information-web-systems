@@ -15,10 +15,10 @@ export const map = new Map({
 
 export const MapContext = createContext<{
   map: Map;
-  layer: Layer[];
-  setLayer: React.Dispatch<SetStateAction<Layer[]>>;
+  layers: Layer[];
+  setLayers: React.Dispatch<SetStateAction<Layer[]>>;
 }>({
-  setLayer: () => {},
+  setLayers: () => {},
   map,
-  layer: [],
+  layers: [],
 });

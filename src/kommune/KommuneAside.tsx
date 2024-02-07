@@ -1,16 +1,23 @@
-import React, {useEffect} from "react";
-import { KommuneFeatures } from "./KommuneFeatures";
+import React, { useEffect, useMemo } from "react";
 import { getStedsNavn } from "../utility/utilities";
+import { getFeatures } from "../utility/getFeatures";
+import { GetViewExtend } from "../utility/getViewExtend";
 
 const KommuneAside = () => {
-  const { visibleFeatures } = KommuneFeatures();
+  const features = getFeatures("kommune");
 
-    useEffect(() => {
-        console.log("Visible Feature: " + visibleFeatures);
-    }, [visibleFeatures]);
+  const viewExtend = GetViewExtend();
+
+  const visibleFeatures = useMemo(
+    () =>
+      features?.filter((feature) =>
+        feature.getGeometry()?.intersectsExtent(viewExtend),
+      ),
+    [features, viewExtend],
+  );
 
   return (
-    <aside className={visibleFeatures?.length? "visible" : "hidden"}>
+    <aside className={visibleFeatures?.length ? "visible" : "hidden"}>
       <div>
         <h1>Kommuner</h1>
         <ul>
