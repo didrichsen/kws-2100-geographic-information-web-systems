@@ -43,3 +43,15 @@ that lets users click on information on a map.
 - [x] Commit and make sure the GitHub Actions workflow runs successfully and the page is deployed to GitHub pages.
 - [x] Add a click handler on the map that displays the name of the clicked kommuner in a dialog box.
 - [x] Add toggle functionality to the kommuner layer to toggle it on/off.
+
+## Branch: Exercise/3
+
+Continue from exercise two. Switch out dialog box with an aside that displays the name of the kommuner
+which are in the current view.
+
+### 1. Display and interact with information on map.
+
+- [x] The user should be able to focus on their own position
+- [x] The user should be able to toggle display of kommune layer on and off
+- [x] When the user clicks on the map with kommuner on, an overlay should show the name of the clicked feature.
+- [x] The map should show an overlay with mark of a chosen city.
