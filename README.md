@@ -1,14 +1,13 @@
 # KWS2100: Exercise 3
 
-Continue from exercise three.
+Continuing from exercise four, display and style point features on a map. 
 
-## 1. Display and interact with information on map.
+## 1. Set Up: 
 
-- [x] The system should show a list of features in an aside
-- [x] When the user changes the view, the list of features in the aside should reflect what the user sees.
-- [x] When the user hovers on a feature in the map, the feature should be highlighted in the aside
-- [x] When the user hovers on a feature, the feature should be highlighted in the map
+- [] Add a map with OpenLayers with an Open Street Map layer and a vector layer from https://kart.dsb.no. I recommend "Mini- og mikrokraftverk" (under "Infrastruktur").
 
-## Display more layers
-
-- [x] Add layers showing "fylker" in Norway
+## 2. Style the map 
+- [] Choose color, style and size based on the feature properties of your chosen feature layer
+- [] Add a list of currently visible features in an aside, like with polygon features
+- [] Show text for each feature (optional: display text based on the view resolution to avoid clutter)
+- [] Add hover or click functionality to the feature layer. Note: use map.forEachFeatureAtPixel instead of VectorSource.getFeatureAtCoordinate
