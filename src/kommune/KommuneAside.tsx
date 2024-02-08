@@ -4,14 +4,21 @@ import { getFeatures } from "../utility/getFeatures";
 import { GetViewExtend } from "../utility/getViewExtend";
 import { MapContext } from "../context/MapContext";
 import { Feature, MapBrowserEvent } from "ol";
-import { Pixel } from "ol/pixel";
 import { FeatureLike } from "ol/Feature";
 import { Fill, Style } from "ol/style";
 import { Polygon } from "ol/geom";
+import {stedsNavn} from "../utility/interfaces";
+
+type KommuneFeature = { getProperties(): KommuneProperties} & Feature<Polygon>;
+
+interface KommuneProperties{
+  navn:stedsNavn[]
+}
+
 
 const KommuneAside = () => {
-  const [activeFeature, setActiveFeature] =
-    useState<Feature<Polygon>>(undefined);
+
+  const [activeFeature, setActiveFeature] = useState<KommuneFeature | undefined>(undefined);
 
   const features = getFeatures("kommune");
   const { map } = useContext(MapContext);
@@ -25,15 +32,15 @@ const KommuneAside = () => {
     [features, viewExtend],
   );
 
-  const handleFeaturesAtPixel = (pixel: Pixel) => {
+  const handleFeaturesAtPixel = (e:MapBrowserEvent<MouseEvent>) => {
     const featuresToStyle: FeatureLike[] = [];
 
-    map.forEachFeatureAtPixel(pixel, (feature) => {
+    map.forEachFeatureAtPixel(e.pixel, (feature) => {
       featuresToStyle.push(feature);
     });
 
     if (featuresToStyle.length === 1) {
-      setActiveFeature(featuresToStyle[0]);
+      setActiveFeature(featuresToStyle[0] as KommuneFeature);
     } else {
       setActiveFeature(undefined);
     }
@@ -46,17 +53,15 @@ const KommuneAside = () => {
   });
 
   useEffect(() => {
-    activeFeature?.setStyle(style);
+    if(features) activeFeature?.setStyle(style);
     return () => activeFeature?.setStyle(undefined);
   }, [activeFeature]);
 
   useEffect(() => {
-    map.on("pointermove", (e: MapBrowserEvent<MouseEvent>) => {
-      const pixel = e.pixel;
-      handleFeaturesAtPixel(pixel);
-    });
-
-    return () => map.un("pointermove");
+    map?.on("pointermove", handleFeaturesAtPixel);
+    return () => {
+      map?.un("pointermove", handleFeaturesAtPixel);
+    };
   }, []);
 
   return (
@@ -65,7 +70,9 @@ const KommuneAside = () => {
         <h1>Kommuner</h1>
         <ul>
           {visibleFeatures?.map((feature, key) => (
-            <li key={key}>{getStedsNavn(feature.getProperties().navn)}</li>
+            <li key={key} className={activeFeature?.getProperties()?.navn[0].navn === getStedsNavn(feature.getProperties().navn) ? 'highlight' : ''}>
+              {getStedsNavn(feature.getProperties().navn)}
+            </li>
           ))}
         </ul>
       </div>
