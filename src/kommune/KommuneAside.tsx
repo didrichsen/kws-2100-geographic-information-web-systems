@@ -7,18 +7,18 @@ import { Feature, MapBrowserEvent } from "ol";
 import { FeatureLike } from "ol/Feature";
 import { Fill, Style } from "ol/style";
 import { Polygon } from "ol/geom";
-import {stedsNavn} from "../utility/interfaces";
+import { stedsNavn } from "../utility/interfaces";
 
-type KommuneFeature = { getProperties(): KommuneProperties} & Feature<Polygon>;
+type KommuneFeature = { getProperties(): KommuneProperties } & Feature<Polygon>;
 
-interface KommuneProperties{
-  navn:stedsNavn[]
+interface KommuneProperties {
+  navn: stedsNavn[];
 }
 
-
 const KommuneAside = () => {
-
-  const [activeFeature, setActiveFeature] = useState<KommuneFeature | undefined>(undefined);
+  const [activeFeature, setActiveFeature] = useState<
+    KommuneFeature | undefined
+  >(undefined);
 
   const features = getFeatures("kommune");
   const { map } = useContext(MapContext);
@@ -32,7 +32,7 @@ const KommuneAside = () => {
     [features, viewExtend],
   );
 
-  const handleFeaturesAtPixel = (e:MapBrowserEvent<MouseEvent>) => {
+  const handleFeaturesAtPixel = (e: MapBrowserEvent<MouseEvent>) => {
     const featuresToStyle: FeatureLike[] = [];
 
     map.forEachFeatureAtPixel(e.pixel, (feature) => {
@@ -53,7 +53,7 @@ const KommuneAside = () => {
   });
 
   useEffect(() => {
-    if(features) activeFeature?.setStyle(style);
+    if (features) activeFeature?.setStyle(style);
     return () => activeFeature?.setStyle(undefined);
   }, [activeFeature]);
 
@@ -70,7 +70,15 @@ const KommuneAside = () => {
         <h1>Kommuner</h1>
         <ul>
           {visibleFeatures?.map((feature, key) => (
-            <li key={key} className={activeFeature?.getProperties()?.navn[0].navn === getStedsNavn(feature.getProperties().navn) ? 'highlight' : ''}>
+            <li
+              key={key}
+              className={
+                activeFeature?.getProperties()?.navn[0].navn ===
+                getStedsNavn(feature.getProperties().navn)
+                  ? "highlight"
+                  : ""
+              }
+            >
               {getStedsNavn(feature.getProperties().navn)}
             </li>
           ))}
