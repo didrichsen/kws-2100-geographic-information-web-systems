@@ -8,3 +8,12 @@ Navigate through the branches to find specific content related to each exercise 
 - PostGIS
 - React with TypeScript
 - Express
+
+## Branch: exercise/1
+
+Create a React application that displays information on a map
+
+- [x] Use Vite to create a React + Typescript application
+- [x] Verify that you can make changes and see them displayed in the web page
+- [x] Replace the App component with a component that uses Openlayers to display a map
+- [x] Add kommuner in Norway as a vector layer
