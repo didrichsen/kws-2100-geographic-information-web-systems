@@ -21,6 +21,7 @@ import { MapContext } from "./context/MapContext";
 import { map } from "./context/MapContext";
 import FylkeLayerCheckbox from "./fylke/FylkeLayerCheckbox";
 import FylkeAside from "./fylke/FylkeAside";
+import KraftverkCheckbox from "./kraftverk/KraftverkCheckbox";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -53,6 +54,7 @@ const MapView = () => {
           <FocusOnMe map={map} />
           <KommuneLayerCheckbox map={map} setLayer={setLayers} />
           <FylkeLayerCheckbox />
+          <KraftverkCheckbox />
         </nav>
 
         <main>
