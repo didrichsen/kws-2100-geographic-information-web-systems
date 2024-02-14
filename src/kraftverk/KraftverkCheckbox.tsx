@@ -3,7 +3,7 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
 import { useLayer } from "../hooks/UseLayer";
-import { Fill, Stroke, Style } from "ol/style";
+import {Fill, Stroke, Style, Text} from "ol/style";
 import { Circle as CircleStyle, RegularShape } from "ol/style"; // Changed Circle import to CircleStyle
 import { Feature, MapBrowserEvent } from "ol";
 import { FeatureLike } from "ol/Feature";
@@ -30,10 +30,12 @@ const clusterSource = new Cluster({
 const kraftverkLayer = new VectorLayer({
   source: clusterSource,
   style: kraftVerkStyle,
+
 });
 
 function kraftVerkStyle(feature: FeatureLike) {
   const kraftFeatures = feature.get("features") as Feature<Point>[];
+  const f = feature as KraftverkFeature;
 
   const maxMaksytelse = kraftFeatures.reduce((max, feature) => {
     const maksytelse = (feature.getProperties() as kraftverkProps).maksytelse;
@@ -42,7 +44,7 @@ function kraftVerkStyle(feature: FeatureLike) {
 
   return new Style({
     image: new CircleStyle({
-      radius: maxMaksytelse * 10,
+      radius: 10 * maxMaksytelse,
       fill: new Fill({
         color: "red",
       }),
@@ -56,15 +58,17 @@ function kraftVerkStyle(feature: FeatureLike) {
 
 function kraftVerkStyleOnHover(feature: FeatureLike) {
   const kraftFeatures = feature.get("features") as Feature<Point>[];
+  const f = feature as KraftverkFeature;
 
   const maxMaksytelse = kraftFeatures.reduce((max, feature) => {
     const maksytelse = (feature.getProperties() as kraftverkProps).maksytelse;
     return Math.max(max, maksytelse);
   }, 0);
 
+
   return new Style({
     image: new CircleStyle({
-      radius: maxMaksytelse * 10,
+      radius: 10 * maxMaksytelse,
       fill: new Fill({
         color: "blue",
       }),
@@ -73,6 +77,10 @@ function kraftVerkStyleOnHover(feature: FeatureLike) {
         width: 2,
       }),
     }),
+    text: new Text({
+      text: maxMaksytelse.toString(),
+      offsetY: 20,
+    })
   });
 }
 
