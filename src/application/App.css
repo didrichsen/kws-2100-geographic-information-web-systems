@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+}
+#root {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+main {
+  background-color: lightblue;
+  display: grid;
+  grid-template-columns: 1fr auto;
+
+  & aside {
+    display: grid;
+    grid-template-columns: 0;
+    overflow-x: clip;
+    overflow-y: auto;
+    max-height: calc(100dvh - 93px);
+    background-color: white;
+  }
+  & aside.visible {
+    grid-template-columns: auto;
+  }
+  & aside > * {
+    padding: 0.5rem;
+    min-width: 25ch;
+  }
+}
+nav {
+  display: flex;
+  gap: 1.5em;
+  height: 3dvh;
+}
+.map {
+  height: 100%;
+  width: 100%;
+}
+.focus-btn {
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid black;
+}
+.focus-btn:hover {
+  background-color: lightgray;
+}
+.baseLayer_select {
+  height: 90%;
+  background-color: transparent;
+  border: 1px solid black;
+}
+.bold {
+  font-weight: bold;
+  color: firebrick;
+  font-size: larger;
+}
+.overlay {
+  background-color: white;
+  transform: translate(-105%, -105%);
+  padding: 0.25em;
+  border-radius: 10%;
+  border: 1px solid black;
+}
+
+.clickedFeature{
+
+  position: fixed;
+  top: 20px;
+  right: 50px;
+  height: auto;
+  z-index: 20;
+  justify-content: center;
+  background-color: aqua;
+}
