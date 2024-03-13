@@ -25,6 +25,13 @@ const map = new Map({
         format: new GeoJSON(),
       }),
     }),
+    new VectorLayer({
+      source: new VectorSource({
+        strategy: (extend, resolution) => (resolution < 0.0001 ? [extend] : []),
+        url: (extend) => `/api/adresser?extent=${JSON.stringify(extend)}`,
+        format: new GeoJSON(),
+      }),
+    }),
   ],
 });
 
