@@ -9,14 +9,16 @@ const postgresql = new pg.Pool({
 const app = express();
 
 app.get("/api/kommuner", async (req, res) => {
-  const result = await postgresql.query("select kommunenummer,kommunenavn,st_simplify(st_transform(omrade,4326),0.001)::json as geometry from kommuner");
+  const result = await postgresql.query(
+    "select kommunenummer,kommunenavn,st_simplify(st_transform(omrade,4326),0.001)::json as geometry from kommuner",
+  );
   res.json({
-    type:"FeatureCollection",
-    features:result.rows.map(({kommunenummer,kommunenavn, geometry}) => ({
+    type: "FeatureCollection",
+    features: result.rows.map(({ kommunenummer, kommunenavn, geometry }) => ({
       geometry,
-      type:"Feature",
-      properties:{kommunenummer,kommunenavn}
-    }))
+      type: "Feature",
+      properties: { kommunenummer, kommunenavn },
+    })),
   });
 });
 
