@@ -1,0 +1,9 @@
+version: "2"
+services:
+  postgis:
+    container_name: kws-postgis
+    image: postgis/postgis
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust

@@ -1,72 +1,54 @@
-# KWS2100 Geographic Information Web Systems
-Repository accompanying me throughout the GIS (Geographical Information Web Systems) course.
-It serves as a log of exercises and lectures, each on their respective branch.
-Navigate through the branches to find specific content related to each exercise or lecture.
+# KWS2100 Kartbaserte Websystemer: Exercise 8
+## Serve vector layer from PostGIS
 
-## Technologies
-- OpenLayers
-- PostGIS
-- React with TypeScript
-- Express
+### Prerequisites
+#### What you should already have done:
+- Create a local React application with OpenLayers.
+- Show a polygon vector layer in OpenLayers (e.g., kommune).
+- Show a point vector layer in OpenLayers (e.g., schools).
 
-## Branch: Exercise/1
+#### Expected knowledge from before:
+- Create an Express application.
+- Run a Docker Compose script.
+- Connect to a database using IntelliJ.
 
-Create a React application that displays information on a map
+### The task
+Instead of serving geographical data from a static file, we want to serve it from a database.
 
-- [x] Use Vite to create a React + Typescript application
-- [x] Verify that you can make changes and see them displayed in the web page
-- [x] Replace the App component with a component that uses Openlayers to display a map
-- [x] Add kommuner in Norway as a vector layer
+#### Part 1: Import data in PostGIS
+1. Create a `docker-compose.yaml` with postgis. [x]
+2. Download kommuner from Geonorge. [x]
+3. Import kommuner into PostGIS. [x]
+    - Hint: "docker exec -i postgis /usr/bin/psql --user postgres norway_data < path to .sql-file"
+4. Download addresses from Geonorge and import into PostGIS.
+    - Hint: "docker exec -i postgis /usr/bin/psql --user postgres norway_data < path to .sql-file"
+5. Download grunnkrets from Geonorge and import into PostGIS.
+    - Hint: "docker exec -i postgis /usr/bin/psql --user postgres norway_data < path to .sql-file"
+6. Connect to the database using IntelliJ and copy data from imports.[x]
+7. Create table `public.kommune` as select `kommunenummer`, ... from `schema.kommune`.[x]
+    - Hint: If you use `st_transform` to convert the reference system to the data, you will be able to join later.
+8. Alter table `public.kommune` add primary key.[x]
+9. Create index `kommune_omrade` on `kommune` using `gist (omrade)`.[x]
 
-## Branch: Exercise/2
+#### Part 2: Explore data in PostGIS
+- Find the address id for the schools address.
+- Find all addresses within 100 meters of a given address.
+    - Hint: Use the `ST_DWithin` function.
+- Include the distance of each match from the given address.
+    - Hint: Use the `ST_Distance` function.
+- Join the addresses from the previous step with the `grunnkrets` where they reside.
+    - Hint: Use the `ST_Contains` function.
 
-Build a vite project from scratch, set up GitHub Actions workflow and then deploy a React application
-that lets users click on information on a map.
+#### Part 3: Consume APIs with a Vite project
+- Set up `vite.config.js` to use Express as backend:
 
-### 1. Set up a vite project and enable GitHub Actions workflow
+```javascript
+import { defineConfig } from "vite";
 
-- [x] Create a new GitHub repository (creating new branch instead)
-- [x] Clone the project locally
-- [x] Create an empty npm project -> echo {} > package.json
-- [x] Add Vite and TypeScript as dependencies
-- [x] Create a dev and build script that calls vite and vite build, respectively -> npm pkg scripts.dev/build="vite/vite build"
-- [x] Create index.html
-- [x] Create a GitHub Action Workflow that calls npm run build
-- [x] Update your GitHub Actions workflow to include [GitHub pages deployment](https://github.com/actions/deploy-pages)
-  - https://didrichsen.github.io/kws-2100-geographic-information-web-systems/
-
-### 2. Display an interactive map where kommuner can toggles on/off
-
-- [x] Add react, react-dom and @types definitions
-- [x] Create a map using ol and OSM
-- [x] Add [kommuner in Norway](https://www.eriksmistad.no/norges-fylker-og-kommuner-i-geojson-format/) as a vector layer.
-- [x] Commit and make sure the GitHub Actions workflow runs successfully and the page is deployed to GitHub pages.
-- [x] Add a click handler on the map that displays the name of the clicked kommuner in a dialog box.
-- [x] Add toggle functionality to the kommuner layer to toggle it on/off.
-
-## Branch: Exercise/3
-
-Continue from exercise two. Switch out dialog box with an aside that displays the name of the kommuner
-which are in the current view.
-
-### 1. Display and interact with information on map.
-
-- [x] The user should be able to focus on their own position
-- [x] The user should be able to toggle display of kommune layer on and off
-- [x] When the user clicks on the map with kommuner on, an overlay should show the name of the clicked feature.
-- [x] The map should show an overlay with mark of a chosen city.
-
-## Branch: Exercise/4
-
-Continue from exercise three.
-
-### 1. Display and interact with information on map.
-
-- [x] The system should show a list of features in an aside
-- [x] When the user changes the view, the list of features in the aside should reflect what the user sees.
-- [x] When the user hovers on a feature in the map, the feature should be highlighted in the aside
-- [x] When the user hovers on a feature, the feature should be highlighted in the map
-
-### Display more layers
-
-- [x] Add layers showing "fylker" in Norway
+export default defineConfig({
+  server: {
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
+  },
+});

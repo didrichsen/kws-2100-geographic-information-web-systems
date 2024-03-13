@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "database:load:kommuner": "docker exec -i /kws-postgis /usr/bin/psql --user postgres < temp/Basisdata_0000_Norge_25833_Kommuner_PostGIS.sql",
+    "database:load:adresser": "docker exec -i /kws-postgis /usr/bin/psql --user postgres < temp/Basisdata_03_Oslo_25833_MatrikkelenAdresse_PostGIS.sql",
+    "database:load:grunnkrets": "docker exec -i /kws-postgis /usr/bin/psql --user postgres < temp/Basisdata_0000_Norge_25833_Grunnkretser_PostGIS.sql"
+  }
+}
